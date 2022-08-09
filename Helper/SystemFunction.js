@@ -122,14 +122,3 @@ export const backAction = () => {
 
   return true;
 };
-
-export const imgFilePath = [
-  "../../assets/photos/cat_photos/cat_photo_1.jpg",
-  "../../assets/photos/cat_photos/cat_photo_2.jpg",
-  "../../assets/photos/cat_photos/cat_photo_3.jpg",
-  "../../assets/photos/cat_photos/cat_photo_4.jpg",
-  "../../assets/photos/cat_photos/cat_photo_5.jpg",
-  "../../assets/photos/cat_photos/cat_photo_6.jpg",
-  "../../assets/photos/cat_photos/cat_photo_7.jpg",
-  "../../assets/photos/cat_photos/cat_photo_8.jpg",
-];

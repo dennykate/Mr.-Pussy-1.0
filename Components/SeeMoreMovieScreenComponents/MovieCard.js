@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    transform: [{ translateY: 10 }],
   },
   addMore: {
     width: 120,

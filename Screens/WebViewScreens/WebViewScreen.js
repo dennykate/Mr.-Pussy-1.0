@@ -6,6 +6,8 @@ import {
   StyleSheet,
   ImageBackground,
   Dimensions,
+  BackHandler,
+  ToastAndroid,
 } from "react-native";
 
 // import react native dependencies
@@ -191,7 +193,7 @@ const WebViewScreen = ({ navigation, route }) => {
         {admobAdsData.banner ? (
           <View style={styles.bannerContainer}>
             <AdMobBanner
-              bannerSize="fullBanner"
+              bannerSize="banner"
               adUnitID={admobAdsData.banner}
               servePersonalizedAds
             />
@@ -272,6 +274,8 @@ const styles = StyleSheet.create({
     width: "100%",
     position: "absolute",
     bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

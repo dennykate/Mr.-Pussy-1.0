@@ -8,6 +8,9 @@ import {
   ScrollView,
 } from "react-native";
 
+// import expo dependencies
+import { StatusBar } from "expo-status-bar";
+
 // import components
 import Header from "../../Components/CatScreensComponents/Header";
 import Images from "../../Components/CatScreensComponents/Images";
@@ -19,7 +22,7 @@ import { AdMobBanner } from "expo-ads-admob";
 import { db } from "../../Helper/Config";
 
 const CatScreen = ({ navigation }) => {
-  const [admobAdsCode, setAdmobAdsCode] = useState("");
+  const [admobAdsCode, setAdmobAdsCode] = useState({ banner: "" });
   useEffect(() => {
     fetchAdmobAdsDataFromFirebase();
   }, []);
@@ -43,16 +46,9 @@ const CatScreen = ({ navigation }) => {
           style={styles.image}
         />
 
-        {admobAdsCode && (
-          <AdMobBanner
-            bannerSize="smartBannerLandscape"
-            adUnitID={admobAdsCode.banner}
-            servePersonalizedAds
-            style={{ alignSelf: "center", marginVertical: 20 }}
-          />
-        )}
+        <Images adsCode={admobAdsCode} />
 
-        <Images />
+        <StatusBar hidden={false} />
       </ScrollView>
     </View>
   );
