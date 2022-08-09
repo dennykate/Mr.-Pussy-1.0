@@ -68,7 +68,7 @@ export default CustomAds;
 const styles = StyleSheet.create({
   bannerContainer: {
     width: Dimensions.get("screen").width - 5,
-    height: 100,
+    height: 80,
     backgroundColor: "transparent",
     marginBottom: 20,
     alignSelf: "center",

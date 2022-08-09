@@ -42,7 +42,7 @@ const HomeNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false, animationEnabled: false }}
-        initialRouteName="CatScreen"
+        initialRouteName="MainScreen"
       >
         <Stack.Screen name="MainScreen" component={BottomNavigation} />
         <Stack.Screen name="SeeMoreMoviesScreen" component={SeeMoreMovies} />

@@ -16,6 +16,7 @@ import * as Network from "expo-network";
 import HeaderLogo from "../../Components/HomeScreenComponents/HeaderLogo";
 import SwiperImage from "../../Components/HomeScreenComponents/SwiperImage";
 import Items from "../../Components/HomeScreenComponents/Items";
+import Category from "../../Components/HomeScreenComponents/Category";
 
 // import redux
 import { useDispatch } from "react-redux";
@@ -27,7 +28,7 @@ import { db } from "../../Helper/Config";
 import IntroNoticeCard from "../../Helper/IntroNoticeCard";
 import ConnectionLose from "../../Helper/ConnectionLose";
 
-// impoer custom ads
+// import custom ads
 import CustomAds from "../../Helper/CustomAds";
 
 const HomeScreen = ({ navigation }) => {
@@ -37,6 +38,7 @@ const HomeScreen = ({ navigation }) => {
     fetchSliderImageDataFromFirebase();
     fetchAdsDataFromFirebase();
     fetchAdmobAdsDataFromFirebase();
+    fetchCategoriesDataFromFirebase();
     checkConnection();
   }, []);
 
@@ -116,6 +118,21 @@ const HomeScreen = ({ navigation }) => {
     });
   };
 
+  const fetchCategoriesDataFromFirebase = async () => {
+    const categoryRef = db
+      .firestore()
+      .collection("categories")
+      .orderBy("id", "asc");
+
+    await categoryRef.onSnapshot((querySnapshot) => {
+      let arr = [];
+      querySnapshot.forEach((doc) => {
+        arr.push(doc.data());
+      });
+      setCategories(arr);
+    });
+  };
+
   const dispatch = useDispatch();
   const setMovieData = (data) => {
     dispatch({
@@ -156,6 +173,8 @@ const HomeScreen = ({ navigation }) => {
       }
     });
   };
+
+  const [categories, setCategories] = useState();
 
   const [myanmarMovie, setMyanmarMovie] = useState([]); // for movies
   const [internationalMovie, setInternationalMovie] = useState([]);
@@ -216,6 +235,15 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView>
         {sliderImageData.length > 0 && (
           <SwiperImage navigation={navigation} data={sliderImageData} />
+        )}
+
+        {categories && (
+          <Category
+            firstAdsCode={banner_1}
+            secondAdsCode={banner_2}
+            categories={categories}
+            navigation={navigation}
+          />
         )}
 
         {topRateMovie.length > 0 && (

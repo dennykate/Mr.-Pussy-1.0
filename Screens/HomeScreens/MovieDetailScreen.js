@@ -55,6 +55,9 @@ const MovieDetailScreen = ({ navigation, route }) => {
   }, [data.title]);
 
   // Get Related Data
+  const movieData = useSelector((state) => state.data);
+  const [relatedData, setRelatedData] = useState([]);
+
   useEffect(() => {
     let dataArr = [];
     for (let i = 0; i < 5; i++) {
@@ -77,10 +80,6 @@ const MovieDetailScreen = ({ navigation, route }) => {
       setAnimation(false);
     }, 2500);
   };
-
-  // Get Related Data
-  const movieData = useSelector((state) => state.data);
-  const [relatedData, setRelatedData] = useState([]);
 
   // get admob ads data
   const admobAdsCode = useSelector((state) => state.admobAds);

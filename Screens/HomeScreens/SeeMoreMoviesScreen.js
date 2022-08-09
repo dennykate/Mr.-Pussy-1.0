@@ -8,15 +8,74 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+// import firebase database
+import { db } from "../../Helper/Config";
+
 // import components
 import ItemCard from "../../Components/SeeMoreMovieScreenComponents/MovieCard";
 
 // import redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const SeeMoreMovies = ({ navigation, route }) => {
-  const { Data: relatedData } = route.params;
+  const { Total: total } = route.params;
   const { Category: category } = route.params;
+
+  // fetch movie data
+  const [movieData, setMovieData] = useState();
+  const [limitMovie, setLimitMovie] = useState(10);
+
+  useEffect(() => {
+    if (category == "Top Rated") {
+      fetchTopRatedMovieDataFromFirebase();
+    } else {
+      fetchMovieDataFromFirebase(category);
+    }
+  }, [limitMovie]);
+
+  const fetchMovieDataFromFirebase = async (category) => {
+    const moviesRef = await db
+      .firestore()
+      .collection("movies")
+      .where("category", "==", category)
+      .orderBy("id", "desc")
+      .limit(limitMovie);
+    await moviesRef.onSnapshot((querySnapshot) => {
+      const arr = [];
+      querySnapshot.forEach((doc) => {
+        arr.push(doc.data());
+      });
+
+      setMovieData(arr);
+      addMovieData(arr);
+    });
+  };
+
+  const fetchTopRatedMovieDataFromFirebase = async () => {
+    const moviesRef = await db
+      .firestore()
+      .collection("movies")
+      .where("top_rate", "==", "1")
+      .orderBy("id", "desc")
+      .limit(limitMovie);
+    await moviesRef.onSnapshot((querySnapshot) => {
+      const arr = [];
+      querySnapshot.forEach((doc) => {
+        arr.push(doc.data());
+      });
+
+      setMovieData(arr);
+      addMovieData(arr);
+    });
+  };
+
+  const dispatch = useDispatch();
+  const addMovieData = (data) => {
+    dispatch({
+      type: "Add Movie",
+      payload: data,
+    });
+  };
 
   // Get native ads data
   const adsData = useSelector((state) => state.ads);
@@ -38,13 +97,26 @@ const SeeMoreMovies = ({ navigation, route }) => {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>
-          {category} [ {relatedData.length}+ ]
+          {category} [ {total}+ ]
         </Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.moviesContainer}>
-          <ItemCard data={relatedData} navigation={navigation} ads={banner_6} />
+          {movieData && (
+            <ItemCard data={movieData} navigation={navigation} ads={banner_6} />
+          )}
         </View>
+
+        {limitMovie < total && (
+          <TouchableOpacity
+            onPress={() => {
+              setLimitMovie(limitMovie + 10);
+            }}
+            style={styles.addMore}
+          >
+            <Text style={styles.addMoreText}>နောက်ထပ်</Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );
@@ -80,6 +152,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     minHeight: 200,
     paddingBottom: 80,
+  },
+  addMore: {
+    width: 120,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "red",
+    position: "absolute",
+    bottom: 5,
+    left: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  addMoreText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

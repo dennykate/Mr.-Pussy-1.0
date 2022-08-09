@@ -45,28 +45,11 @@ const DetailBody = ({ navigation, data, admobAdsCode }) => {
         <Text style={styles.aboutDetail}>{data.content} </Text>
       </View>
 
-      {/* <TouchableOpacity
-        style={styles.howToDownload}
-        onPress={() => {
-          navigation.navigate("MovieViewScreen", {
-            MOVIE_URL:
-              "https://music-platform.sgp1.digitaloceanspaces.com/files/Hybs7LTJb7TEG9ojNlZTm2jpVEiyhBP9OoSGwpRD.mp4",
-          });
-        }}
-      >
-        <Text style={styles.howToDownloadText}>ဒေါင်းလုဒ်လုပ်နည်း</Text>
-      </TouchableOpacity> */}
-
       <View style={styles.btnContainer}>
         <TouchableOpacity
           style={styles.btn}
           activeOpacity={0.5}
           onPress={() => {
-            // ToastAndroid.show(
-            //   "ဒေါင်းလုဒ်လုပ်ခြင်း စတင်ပါပြီ !",
-            //   ToastAndroid.SHORT
-            // );
-            // DownloadMovie(URL, data.title);
             navigation.navigate("WebViewScreen", {
               MOVIE_URL: data.movie,
               TYPE: data.type,

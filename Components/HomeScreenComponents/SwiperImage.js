@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 220,
     alignSelf: "center",
-    borderRadius: 3,
     resizeMode: "cover",
   },
 });
