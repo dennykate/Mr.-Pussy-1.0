@@ -16,6 +16,9 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 // import redux
 import { useSelector } from "react-redux";
 
+// import firebase database
+import { db } from "../../Helper/Config";
+
 // import components
 import ItemCard from "../../Components/SeeMoreMovieScreenComponents/MovieCard";
 
@@ -47,22 +50,20 @@ const SearchScreen = ({ navigation }) => {
     });
   };
 
-  const searchMovieData = (text) => {
-    setSearchData("");
+  const searchMovieData = async (text) => {
     const searchText = text.trim();
-    if (searchText) {
-      const dataArr = [];
-      data.forEach((item) => {
-        const title = item.title.toUpperCase();
-        let match = title.search(searchText.toUpperCase());
 
-        if (match >= 0) {
-          dataArr.push(item);
-        }
+    const movieRef = db
+      .firestore()
+      .collection("movies")
+      .where("title", "==", searchText);
+    await movieRef.onSnapshot((querySnapShot) => {
+      let arr = [];
+      querySnapShot.forEach((doc) => {
+        arr.push(doc.data());
       });
-
-      setSearchData(dataArr);
-    }
+      setSearchData(arr);
+    });
   };
 
   return (

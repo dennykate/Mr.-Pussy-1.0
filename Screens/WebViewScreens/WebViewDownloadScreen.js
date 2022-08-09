@@ -10,9 +10,9 @@ const WebViewDownloadScreen = ({ route, navigation }) => {
   const webRef = useRef();
   useEffect(() => {
     setTimeout(() => {
-      ToastAndroid.show("ဒေါင်းလုဒ်လုပ်ခြင်း စတင်ပါပြီ !", ToastAndroid.SHORT);
+      ToastAndroid.show("Dwonload Movie!", ToastAndroid.SHORT);
       navigation.goBack();
-    }, 3000);
+    }, 5000);
   }, []);
 
   return (

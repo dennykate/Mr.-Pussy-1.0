@@ -33,7 +33,6 @@ import CustomAds from "../../Helper/CustomAds";
 
 const HomeScreen = ({ navigation }) => {
   useEffect(() => {
-    fetchMovieDataFromFirebase();
     fetchSocialAccDataFromFirebase();
     fetchSliderImageDataFromFirebase();
     fetchAdsDataFromFirebase();
@@ -49,24 +48,6 @@ const HomeScreen = ({ navigation }) => {
     } else {
       setConnectionFail(false);
     }
-  };
-
-  const fetchMovieDataFromFirebase = async () => {
-    const moviesRef = await db
-      .firestore()
-      .collection("movies")
-      .orderBy("id", "desc");
-    await moviesRef.onSnapshot((querySnapshot) => {
-      const arr = [];
-      querySnapshot.forEach((doc) => {
-        arr.push(doc.data());
-      });
-
-      manageMovieData(arr);
-      for (let i = 0; i < arr.length; i++) {
-        setMovieData(arr[i]);
-      }
-    });
   };
 
   const fetchSocialAccDataFromFirebase = async () => {
@@ -134,13 +115,6 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const dispatch = useDispatch();
-  const setMovieData = (data) => {
-    dispatch({
-      type: "Add Movie",
-      payload: data,
-    });
-  };
-
   const setSocialData = (data) => {
     dispatch({
       type: "Add Socials",
@@ -228,7 +202,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: "black" }}>
       {connectionFail && <ConnectionLose />}
 
-      {/* {nativeAds && <IntroNoticeCard data={nativeAds} />} */}
+      {nativeAds && <IntroNoticeCard data={nativeAds} />}
 
       {facebookPage && <HeaderLogo data={facebookPage} />}
 
@@ -243,34 +217,6 @@ const HomeScreen = ({ navigation }) => {
             secondAdsCode={banner_2}
             categories={categories}
             navigation={navigation}
-          />
-        )}
-
-        {topRateMovie.length > 0 && (
-          <Items
-            data={topRateMovie}
-            navigation={navigation}
-            category={"Top Rated"}
-          />
-        )}
-
-        {banner_1 && <CustomAds type={"Banner_1"} adsCode={banner_1} />}
-
-        {myanmarMovie.length > 0 && (
-          <Items
-            data={myanmarMovie}
-            navigation={navigation}
-            category={"Myanmar"}
-          />
-        )}
-
-        {banner_2 && <CustomAds type={"Banner_2"} adsCode={banner_2} />}
-
-        {internationalMovie.length > 0 && (
-          <Items
-            data={internationalMovie}
-            navigation={navigation}
-            category={"International"}
           />
         )}
       </ScrollView>

@@ -1,7 +1,7 @@
 export const movieDataReducer = (state = "", action) => {
   switch (action.type) {
     case "Add Movie":
-      return [...state, action.payload];
+      return [...state, ...action.payload];
     default:
       return state;
   }

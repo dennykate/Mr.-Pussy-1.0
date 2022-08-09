@@ -111,7 +111,9 @@ const MovieDetailScreen = ({ navigation, route }) => {
 
         {nativeAds && <CustomAds type={"Native"} adsCode={nativeAds} />}
 
-        <RelatedMovies navigation={navigation} relatedData={relatedData} />
+        {relatedData.length > 0 && (
+          <RelatedMovies navigation={navigation} relatedData={relatedData} />
+        )}
 
         {banner_4 && (
           <View styles={styles.bannerContainer}>
