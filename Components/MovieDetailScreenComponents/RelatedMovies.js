@@ -8,7 +8,7 @@ const RelatedMovies = ({ navigation, relatedData }) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>အခြားသော ဇာတ်ကားများ</Text>
+        <Text style={styles.title}>Recommended Movies</Text>
       </View>
       <ScrollView
         horizontal={true}
@@ -30,18 +30,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   titleContainer: {
-    width: 175,
+    width: 225,
     height: 35,
     marginLeft: 10,
-    marginBottom: 10,
+    marginBottom: 12,
     borderBottomWidth: 1,
     borderBottomColor: "orange",
   },
   title: {
-    fontSize: 15,
+    fontSize: 20,
     color: "orange",
-    fontFamily: "NotoSansMyanmar-SemiBold",
-    letterSpacing: 0.5,
+    fontWeight: "bold",
   },
 });
 

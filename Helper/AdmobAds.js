@@ -1,3 +1,4 @@
+import { ToastAndroid } from "react-native";
 import { AdMobRewarded } from "expo-ads-admob";
 
 const rewardInterstitial = async (adsCode) => {
@@ -20,4 +21,14 @@ const interstitial = async (adsCode) => {
   }
 };
 
-export { rewardInterstitial, interstitial };
+const reward = async (adsCode) => {
+  await AdMobRewarded.setAdUnitID(adsCode);
+  try {
+    await AdMobRewarded.requestAdAsync({ servePersonalizedAds: false });
+    await AdMobRewarded.showAdAsync();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export { rewardInterstitial, interstitial, reward };

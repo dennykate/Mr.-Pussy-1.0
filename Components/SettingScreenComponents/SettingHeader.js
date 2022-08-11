@@ -7,7 +7,7 @@ import LottieView from "lottie-react-native";
 const Header = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>အကူအညီများ</Text>
+      <Text style={styles.title}>Help Center</Text>
     </View>
   );
 };
@@ -26,10 +26,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   title: {
-    fontSize: 18,
     color: "orange",
-    fontFamily: "NotoSansMyanmar-Bold",
-    letterSpacing: 0.5,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 

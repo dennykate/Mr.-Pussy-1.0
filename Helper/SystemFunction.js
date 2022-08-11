@@ -4,26 +4,49 @@ import * as MediaLibrary from "expo-media-library";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 
+// import async storage
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { Alert, BackHandler, ToastAndroid } from "react-native";
 
-export const DownloadMovie = (URL, NAME) => {
+export const DownloadMovie = (URL, NAME, dispatch, IMAGE) => {
   const saveFile = async (fileUri) => {
     let permission = await MediaLibrary.requestPermissionsAsync();
 
     if (permission.granted) {
       const asset = await MediaLibrary.createAssetAsync(fileUri);
 
+      storeFile(fileUri, NAME, IMAGE);
+
       await MediaLibrary.createAlbumAsync("../Mr Pussy", asset, false);
     }
     return permission.granted;
+  };
+
+  const storeFile = async (link, name, image) => {
+    const id = new Date().getTime();
+    const file = {
+      id: id,
+      link: link,
+      name: name,
+      image: image,
+    };
+
+    const jsonFile = JSON.stringify(file);
+
+    try {
+      await AsyncStorage.setItem(String(id), jsonFile);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const schedulePushNotification = async (res_file_name) => {
     // I dont use noti
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "အောင်မြင်ပါသည်",
-        body: res_file_name + " အားဒေါင်းလုဒ်လုပ်ခြင်း အောင်မြင်ပါသည် !!",
+        title: "Success",
+        body: res_file_name + " Download Success !!",
         data: { data: "goes here" },
         sound: "notification-sound.wav",
       },
@@ -42,7 +65,15 @@ export const DownloadMovie = (URL, NAME) => {
 
       {},
 
-      (res) => {}
+      (res) => {
+        const percentage = Math.floor(
+          (res.totalBytesWritten / res.totalBytesExpectedToWrite) * 100
+        );
+        dispatch({
+          type: "Add Download File",
+          payload: percentage,
+        });
+      }
     );
 
     try {
@@ -54,15 +85,14 @@ export const DownloadMovie = (URL, NAME) => {
         if (res) {
           schedulePushNotification(file_name.split(".")[0]);
           ToastAndroid.showWithGravity(
-            `${file_name.split(".")[0]} 
-အားဒေါင်းလုဒ်လုပ်ခြင်းအောင်မြင်ပါသည် !`,
+            `${file_name.split(".")[0]} - Download Success !`,
 
             ToastAndroid.SHORT,
             ToastAndroid.TOP
           );
         } else {
           ToastAndroid.show(
-            "ဒေါင်းလုဒ်လုပ်ရန် Permission လိုအပ်ပါသည်!",
+            "Need Permission For Download Video!",
             ToastAndroid.SHORT
           );
         }
@@ -109,15 +139,15 @@ export const registerForPushNotificationsAsync = async () => {
 };
 
 export const backAction = () => {
-  Alert.alert("Mr. Pussy", "Application မှထွက်ခွာရန်တောင်းဆိုချက်", [
+  Alert.alert("Mr. Pussy", "Exit Now !!!", [
     {
-      text: "မထွက်ပါ",
+      text: "No",
       onPress: () => {
-        ToastAndroid.show("ရွေးချယ်မှု မှန်ကန်ပါတယ်!!", ToastAndroid.SHORT);
+        ToastAndroid.show("Nice Job!!", ToastAndroid.SHORT);
       },
       style: "cancel",
     },
-    { text: "ထွက်မည်", onPress: () => BackHandler.exitApp() },
+    { text: "Exit", onPress: () => BackHandler.exitApp() },
   ]);
 
   return true;

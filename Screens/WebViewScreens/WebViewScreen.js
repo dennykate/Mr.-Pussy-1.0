@@ -18,17 +18,29 @@ import LottieView from "lottie-react-native";
 import CustomAds from "../../Helper/CustomAds";
 
 // import redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // import admob ads dependenncies
 import { AdMobBanner } from "expo-ads-admob";
+
+// import download movie
+import { DownloadMovie } from "../../Helper/SystemFunction";
 
 // import admob ads
 import { rewardInterstitial, interstitial } from "../../Helper/AdmobAds";
 
 const WebViewScreen = ({ navigation, route }) => {
-  const { MOVIE_URL, TYPE, TOP_RATE } = route.params;
+  const { MOVIE_URL, TYPE, TOP_RATE, NAME, IMAGE } = route.params;
   const admobAdsData = useSelector((state) => state.admobAds);
+
+  const downloadPercent = useSelector((state) => state.donwloadPercent);
+  const [progressBar, setProgressBar] = useState();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setProgressBar(downloadPercent + "%");
+  }, [downloadPercent]);
 
   useEffect(() => {
     requestInterstitialAds();
@@ -66,13 +78,19 @@ const WebViewScreen = ({ navigation, route }) => {
             'window.ReactNativeWebView.postMessage(document.querySelector("source").getAttribute("src"))'
           );
         }, 3000);
-      } else {
+      } else if (TYPE == 2) {
         setTimeout(() => {
           webRef.current.injectJavaScript(
             'window.ReactNativeWebView.postMessage(document.querySelector("source").getAttribute("src"))'
           );
           webRef.current.injectJavaScript(
             'window.ReactNativeWebView.postMessage(document.querySelector(".icon-little-thin-left-arrow").style.display = "none")'
+          );
+        }, 3000);
+      } else if (TYPE == 3) {
+        setTimeout(() => {
+          webRef.current.injectJavaScript(
+            'window.ReactNativeWebView.postMessage(document.querySelector("source").getAttribute("src"))'
           );
         }, 3000);
       }
@@ -161,10 +179,21 @@ const WebViewScreen = ({ navigation, route }) => {
             <TouchableOpacity
               style={[styles.btn, { backgroundColor: "red" }]}
               onPress={() => {
-                downloadInWebview(link, TYPE);
+                if (TYPE != 3) {
+                  downloadInWebview(link, TYPE);
+                } else {
+                  if (downloadPercent > 0 && downloadPercent != 100) {
+                    ToastAndroid.show(
+                      "Still Downloading. Please Wait",
+                      ToastAndroid.SHORT
+                    );
+                  } else {
+                    DownloadMovie(link, NAME, dispatch, IMAGE);
+                  }
+                }
               }}
             >
-              <Text style={styles.btnText}>ဒေါင်းလုဒ်လုပ်မည်</Text>
+              <Text style={styles.btnText}>Download Movie</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.btn, { backgroundColor: "green" }]}
@@ -174,7 +203,7 @@ const WebViewScreen = ({ navigation, route }) => {
                 });
               }}
             >
-              <Text style={styles.btnText}>တိုက်ရိုက်ကြည့်မည်</Text>
+              <Text style={styles.btnText}>Watch Movie</Text>
             </TouchableOpacity>
           </View>
         ) : (
@@ -187,6 +216,15 @@ const WebViewScreen = ({ navigation, route }) => {
                 style={styles.lottie}
               />
             </View>
+          </View>
+        )}
+
+        {TYPE == 3 && downloadPercent > 0 && downloadPercent != 100 && (
+          <View style={styles.downloadPercentContainer}>
+            <Text style={styles.downloadPercentText}>
+              Downloading... {downloadPercent}%
+            </Text>
+            <View style={[styles.progressBar, { width: progressBar }]}></View>
           </View>
         )}
 
@@ -251,7 +289,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     flexDirection: "row",
-    marginBottom: 30,
+    marginBottom: 5,
   },
   btn: {
     width: 130,
@@ -276,6 +314,33 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: "center",
     justifyContent: "center",
+  },
+  downloadPercentContainer: {
+    width: 200,
+    height: 50,
+    borderRadius: 5,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparant",
+    borderWidth: 0.5,
+    borderColor: "white",
+    overflow: "hidden",
+  },
+  progressBar: {
+    height: "100%",
+    backgroundColor: "#512DA8",
+    zIndex: -1,
+    position: "absolute",
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+  },
+  downloadPercentText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 15,
   },
 });
 

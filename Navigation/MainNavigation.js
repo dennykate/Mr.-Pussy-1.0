@@ -22,6 +22,8 @@ import SearchScreen from "../Screens/SearchScreens/SearchScreen";
 import CatScreen from "../Screens/CatsScreens/CatScreen";
 import WebViewScreen from "../Screens/WebViewScreens/WebViewScreen";
 import WebViewDownloadScreen from "../Screens/WebViewScreens/WebViewDownloadScreen";
+import DonationScreen from "../Screens/DonationScreens/DonationScreen";
+import DownloadedFilesScreen from "../Screens/DownloadedFilesScreens/DownloadedFilesScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -42,7 +44,7 @@ const HomeNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false, animationEnabled: false }}
-        initialRouteName="CatScreen"
+        initialRouteName="MainScreen"
       >
         <Stack.Screen name="MainScreen" component={BottomNavigation} />
         <Stack.Screen name="SeeMoreMoviesScreen" component={SeeMoreMovies} />
@@ -73,11 +75,15 @@ const BottomNavigation = () => {
             iconName = focused ? "home" : "home-outline";
           } else if (routeName == "SearchScreen") {
             iconName = focused ? "search" : "search-outline";
+          } else if (routeName == "DonationScreen") {
+            iconName = focused ? "cash" : "cash-outline";
+          } else if (routeName == "DownloadedFilesScreen") {
+            iconName = focused ? "cloud-download" : "cloud-download-outline";
           } else if (routeName == "SettingScreen") {
             iconName = focused ? "copy" : "copy-outline";
           }
 
-          return <Ionicons name={iconName} size={22} color={color} />;
+          return <Ionicons name={iconName} size={20} color={color} />;
         },
         tabBarActiveTintColor: "orange",
         tabBarInactiveTintColor: "#f5f5f5",
@@ -100,6 +106,16 @@ const BottomNavigation = () => {
       <Tab.Screen
         name="SearchScreen"
         component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="DonationScreen"
+        component={DonationScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="DownloadedFilesScreen"
+        component={DownloadedFilesScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen

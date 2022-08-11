@@ -114,7 +114,7 @@ const SeeMoreMovies = ({ navigation, route }) => {
             }}
             style={styles.addMore}
           >
-            <Text style={styles.addMoreText}>နောက်ထပ်</Text>
+            <Text style={styles.addMoreText}>Next Page</Text>
           </TouchableOpacity>
         )}
       </ScrollView>
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
   addMoreText: {
     color: "white",
     fontWeight: "bold",
+    fontSize: 16,
   },
 });
 

@@ -42,3 +42,12 @@ export const admobAdsReducer = (state = "", action) => {
       return state;
   }
 };
+
+export const DownloadFileInPercent = (state = "", action) => {
+  switch (action.type) {
+    case "Add Download File":
+      return action.payload;
+    default:
+      return state;
+  }
+};

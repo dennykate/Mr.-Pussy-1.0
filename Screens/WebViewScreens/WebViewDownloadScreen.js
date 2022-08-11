@@ -10,7 +10,7 @@ const WebViewDownloadScreen = ({ route, navigation }) => {
   const webRef = useRef();
   useEffect(() => {
     setTimeout(() => {
-      ToastAndroid.show("Dwonload Movie!", ToastAndroid.SHORT);
+      ToastAndroid.show("Download Movie!", ToastAndroid.SHORT);
       navigation.goBack();
     }, 5000);
   }, []);

@@ -34,13 +34,13 @@ const DetailBody = ({ navigation, data, admobAdsCode }) => {
       <View style={styles.detailContainer}>
         <Text style={styles.title}>{data.title} </Text>
         <Text style={styles.detail}>
-          ဆိုဒ် : <Text style={styles.detailData}> {data.size} </Text>
+          File Size : <Text style={styles.detailData}> {data.size} </Text>
         </Text>
         <Text style={styles.detail}>
-          ကြာချိန် : <Text style={styles.detailData}> {data.duration} </Text>
+          Duration : <Text style={styles.detailData}> {data.duration} </Text>
         </Text>
         <View style={styles.aboutTitleContainer}>
-          <Text style={styles.aboutTitle}>အကြောင်းအရာ</Text>
+          <Text style={styles.aboutTitle}>Detail</Text>
         </View>
         <Text style={styles.aboutDetail}>{data.content} </Text>
       </View>
@@ -54,10 +54,12 @@ const DetailBody = ({ navigation, data, admobAdsCode }) => {
               MOVIE_URL: data.movie,
               TYPE: data.type,
               TOP_RATE: data.top_rate,
+              NAME: data.title,
+              IMAGE: data.image,
             });
           }}
         >
-          <Text style={styles.btnText}>‌ဇာတ်ကားကြည့်မည်</Text>
+          <Text style={styles.btnText}>Watch Movie</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
   detail: {
     color: "orange",
     fontSize: 14,
-    fontFamily: "NotoSansMyanmar-Thin",
+    fontFamily: "NotoSansMyanmar-Bold",
     marginTop: 10,
   },
   detailData: {
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   btn: {
-    width: 250,
+    width: 200,
     height: 50,
     borderRadius: 5,
     justifyContent: "center",
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   aboutTitleContainer: {
-    width: 110,
+    width: 70,
     height: 33,
     marginTop: 10,
     borderBottomWidth: 1,
@@ -143,8 +145,8 @@ const styles = StyleSheet.create({
   },
   aboutTitle: {
     color: "orange",
-    fontFamily: "NotoSansMyanmar-Thin",
-    fontSize: 14,
+    fontFamily: "NotoSansMyanmar-Bold",
+    fontSize: 17,
     letterSpacing: 1,
   },
   aboutDetail: {

@@ -15,7 +15,6 @@ import * as Network from "expo-network";
 // import components
 import HeaderLogo from "../../Components/HomeScreenComponents/HeaderLogo";
 import SwiperImage from "../../Components/HomeScreenComponents/SwiperImage";
-import Items from "../../Components/HomeScreenComponents/Items";
 import Category from "../../Components/HomeScreenComponents/Category";
 
 // import redux
@@ -27,9 +26,6 @@ import { db } from "../../Helper/Config";
 // import Helper
 import IntroNoticeCard from "../../Helper/IntroNoticeCard";
 import ConnectionLose from "../../Helper/ConnectionLose";
-
-// import custom ads
-import CustomAds from "../../Helper/CustomAds";
 
 const HomeScreen = ({ navigation }) => {
   useEffect(() => {
@@ -150,10 +146,6 @@ const HomeScreen = ({ navigation }) => {
 
   const [categories, setCategories] = useState();
 
-  const [myanmarMovie, setMyanmarMovie] = useState([]); // for movies
-  const [internationalMovie, setInternationalMovie] = useState([]);
-  const [topRateMovie, setTopRateMovie] = useState([]);
-
   const [sliderImageData, setSliderImageData] = useState([]); // for slider image
 
   const [nativeAds, setNativeAds] = useState(); // for ads
@@ -202,7 +194,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: "black" }}>
       {connectionFail && <ConnectionLose />}
 
-      {nativeAds && <IntroNoticeCard data={nativeAds} />}
+      {/* {nativeAds && <IntroNoticeCard data={nativeAds} />} */}
 
       {facebookPage && <HeaderLogo data={facebookPage} />}
 

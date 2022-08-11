@@ -22,13 +22,14 @@ import { db } from "../../Helper/Config";
 // import components
 import ItemCard from "../../Components/SeeMoreMovieScreenComponents/MovieCard";
 
-const SearchScreen = ({ navigation }) => {
-  // get movie data
-  const movieData = useSelector((state) => state.data);
-  const [data, setData] = useState();
+// import admob ads dependenncies
+import { AdMobBanner } from "expo-ads-admob";
 
-  // Get native ads data
+const SearchScreen = ({ navigation }) => {
+  // Get ads data
   const adsData = useSelector((state) => state.ads);
+  const admobAdsData = useSelector((state) => state.admobAds);
+
   const [banner_4, setBanner_4] = useState();
 
   const [search, setSearch] = useState();
@@ -36,10 +37,6 @@ const SearchScreen = ({ navigation }) => {
 
   useEffect(() => {
     filterAdsData(adsData);
-  }, []);
-
-  useEffect(() => {
-    setData(movieData);
   }, []);
 
   const filterAdsData = (data) => {
@@ -69,16 +66,14 @@ const SearchScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>
-          သင်ရှာဖွေလိုသောဇာတ်ကားများကို ရှာဖွေနိုင်ပါသည်
-        </Text>
+        <Text style={styles.headerText}>Search Your Movie Here </Text>
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           value={search}
           style={styles.input}
-          placeholder="ဇာတ်ကားအမည်ရေးရန်"
+          placeholder="Movie Name..."
           onChangeText={(text) => {
             setSearch(text);
             setSearchData([]);
@@ -99,6 +94,16 @@ const SearchScreen = ({ navigation }) => {
       </View>
 
       <ScrollView>
+        {admobAdsData.banner.length > 0 && (
+          <View style={styles.bannerContainer}>
+            <AdMobBanner
+              bannerSize="banner"
+              adUnitID={admobAdsData.banner}
+              servePersonalizedAds
+            />
+          </View>
+        )}
+
         <View style={styles.moviesContainer}>
           {searchData ? (
             <ItemCard
@@ -133,8 +138,8 @@ const styles = StyleSheet.create({
   headerText: {
     marginTop: 30,
     marginLeft: 20,
-    color: "white",
-    fontSize: 13,
+    color: "orange",
+    fontSize: 18,
     fontWeight: "bold",
   },
   inputContainer: {
@@ -171,6 +176,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     minHeight: 200,
     paddingBottom: 80,
+  },
+  bannerContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
   },
 });
 

@@ -42,7 +42,7 @@ const CatScreen = ({ navigation }) => {
 
       <ScrollView>
         <Image
-          source={require("../../assets/photos/girl-background.jpg")}
+          source={require("../../assets/photos/cat-screen-image.jpg")}
           style={styles.image}
         />
 

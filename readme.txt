@@ -8,3 +8,4 @@ Ads Types
 Movie Type
 Amazon Drive = Type 1
 Ice Drive = Type 2
+Direct = Type 3

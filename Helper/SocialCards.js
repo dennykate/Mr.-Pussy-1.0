@@ -67,9 +67,7 @@ export const Messenger = ({ data }) => {
         source={require("../assets/photos/messenger-logo.png")}
         style={styles.logo}
       />
-      <Text style={styles.socialName}>
-        Messenger <Text style={styles.mmText}>မှတိုက်ရိုက်‌ပြောဆိုရန်</Text>
-      </Text>
+      <Text style={styles.socialName}>Messenger Chat</Text>
     </TouchableOpacity>
   );
 };
@@ -113,9 +111,7 @@ export const Suggestion = ({ data }) => {
         source={require("../assets/photos/suggestion-logo.png")}
         style={styles.logo}
       />
-      <Text style={styles.socialName}>
-        <Text style={styles.mmText}>အကြံပြုချက် များပေးပို့ရန်</Text>
-      </Text>
+      <Text style={styles.socialName}>Recommended Movie</Text>
     </TouchableOpacity>
   );
 };
@@ -135,20 +131,15 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Regular",
     fontSize: 13,
   },
-  mmText: {
-    fontFamily: "NotoSansMyanmar-SemiBold",
-    fontSize: 12,
-    letterSpacing: 0.5,
-  },
   logo: {
     width: 35,
     height: 35,
-    marginRight: 15,
+    marginRight: 45,
   },
   ytLogo: {
     width: 40,
     height: 30,
-    marginRight: 10,
+    marginRight: 40,
     transform: [{ translateX: 0 }],
     borderRadius: 5,
   },
