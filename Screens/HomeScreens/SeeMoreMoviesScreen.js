@@ -20,6 +20,7 @@ import { useSelector, useDispatch } from "react-redux";
 const SeeMoreMovies = ({ navigation, route }) => {
   const { Total: total } = route.params;
   const { Category: category } = route.params;
+  const { Type: type } = route.params;
 
   // fetch movie data
   const [movieData, setMovieData] = useState();
@@ -45,7 +46,6 @@ const SeeMoreMovies = ({ navigation, route }) => {
       querySnapshot.forEach((doc) => {
         arr.push(doc.data());
       });
-
       setMovieData(arr);
       addMovieData(arr);
     });
@@ -103,7 +103,13 @@ const SeeMoreMovies = ({ navigation, route }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.moviesContainer}>
           {movieData && (
-            <ItemCard data={movieData} navigation={navigation} ads={banner_6} />
+            <ItemCard
+              data={movieData}
+              navigation={navigation}
+              ads={banner_6}
+              limitAmount={limitMovie}
+              type={type}
+            />
           )}
         </View>
 
@@ -114,7 +120,7 @@ const SeeMoreMovies = ({ navigation, route }) => {
             }}
             style={styles.addMore}
           >
-            <Text style={styles.addMoreText}>Next Page</Text>
+            <Text style={styles.addMoreText}>More</Text>
           </TouchableOpacity>
         )}
       </ScrollView>
@@ -147,10 +153,8 @@ const styles = StyleSheet.create({
     width: "100%",
     flexWrap: "wrap",
     justifyContent: "center",
-    paddingHorizontal: 7,
     paddingVertical: 15,
     flexDirection: "row",
-    minHeight: 200,
     paddingBottom: 80,
   },
   addMore: {

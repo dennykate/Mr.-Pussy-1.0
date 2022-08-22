@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ToastAndroid,
   Linking,
+  Dimensions,
 } from "react-native";
 
 // import helper
@@ -15,10 +16,10 @@ import { DownloadMovie } from "../../Helper/SystemFunction";
 // import admob ads dependenncies
 import { AdMobBanner } from "expo-ads-admob";
 
-const DetailBody = ({ navigation, data, admobAdsCode }) => {
+const DetailBody = ({ navigation, data, admobAdsCode, type }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
+      <View style={type == "thumbnail" ? styles.thumbnail : styles.poster}>
         <Image source={{ uri: data.image }} style={styles.image} />
       </View>
 
@@ -32,7 +33,14 @@ const DetailBody = ({ navigation, data, admobAdsCode }) => {
       )}
 
       <View style={styles.detailContainer}>
-        <Text style={styles.title}>{data.title} </Text>
+        <Text style={styles.title}>
+          {data.title.length > 30
+            ? data.title.substring(0, 30) + "..."
+            : data.title}{" "}
+        </Text>
+        <Text style={styles.detail}>
+          Code : <Text style={styles.detailData}> {data.code} </Text>
+        </Text>
         <Text style={styles.detail}>
           File Size : <Text style={styles.detailData}> {data.size} </Text>
         </Text>
@@ -56,6 +64,7 @@ const DetailBody = ({ navigation, data, admobAdsCode }) => {
               TOP_RATE: data.top_rate,
               NAME: data.title,
               IMAGE: data.image,
+              HD: data.hd,
             });
           }}
         >
@@ -71,16 +80,27 @@ const styles = StyleSheet.create({
     width: "100%",
     minHeight: 500,
   },
-  imageContainer: {
-    width: 220,
-    height: 300,
+  poster: {
+    width: Dimensions.get("screen").width - 20,
+    height: (Dimensions.get("screen").width * 9) / 16,
     marginVertical: 20,
-    borderTopStartRadius: 25,
-    borderBottomEndRadius: 25,
     overflow: "hidden",
     borderWidth: 0.8,
     borderColor: "grey",
     alignSelf: "center",
+    borderTopLeftRadius: 25,
+    borderBottomEndRadius: 25,
+  },
+  thumbnail: {
+    width: 220,
+    height: 320,
+    marginVertical: 20,
+    overflow: "hidden",
+    borderWidth: 0.8,
+    borderColor: "grey",
+    alignSelf: "center",
+    borderTopLeftRadius: 25,
+    borderBottomEndRadius: 25,
   },
   image: {
     width: "100%",
@@ -107,8 +127,8 @@ const styles = StyleSheet.create({
   },
   detailData: {
     color: "grey",
-    fontSize: 17,
-    fontFamily: "DancingScript-Regular",
+    fontSize: 14,
+    fontFamily: "Roboto",
     marginLeft: 20,
   },
   btnContainer: {

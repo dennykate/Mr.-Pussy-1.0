@@ -45,8 +45,8 @@ export const DownloadMovie = (URL, NAME, dispatch, IMAGE) => {
     // I dont use noti
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Success",
-        body: res_file_name + " Download Success !!",
+        title: "Download Success",
+        body: res_file_name,
         data: { data: "goes here" },
         sound: "notification-sound.wav",
       },
@@ -139,7 +139,7 @@ export const registerForPushNotificationsAsync = async () => {
 };
 
 export const backAction = () => {
-  Alert.alert("Mr. Pussy", "Exit Now !!!", [
+  Alert.alert("Mr. Pussy", "Exit Now ", [
     {
       text: "No",
       onPress: () => {

@@ -18,7 +18,7 @@ import SwiperImage from "../../Components/HomeScreenComponents/SwiperImage";
 import Category from "../../Components/HomeScreenComponents/Category";
 
 // import redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // import firebase database
 import { db } from "../../Helper/Config";
@@ -28,6 +28,8 @@ import IntroNoticeCard from "../../Helper/IntroNoticeCard";
 import ConnectionLose from "../../Helper/ConnectionLose";
 
 const HomeScreen = ({ navigation }) => {
+  const checkIntroNativeCode = useSelector((state) => state.introNativeCode);
+
   useEffect(() => {
     fetchSocialAccDataFromFirebase();
     fetchSliderImageDataFromFirebase();
@@ -35,6 +37,7 @@ const HomeScreen = ({ navigation }) => {
     fetchAdmobAdsDataFromFirebase();
     fetchCategoriesDataFromFirebase();
     checkConnection();
+    setIntroCodeFunc();
   }, []);
 
   const checkConnection = async () => {
@@ -144,6 +147,15 @@ const HomeScreen = ({ navigation }) => {
     });
   };
 
+  const setIntroCodeFunc = () => {
+    setTimeout(() => {
+      dispatch({
+        type: "Add Intro Native Code",
+        payload: 1,
+      });
+    }, 15000);
+  };
+
   const [categories, setCategories] = useState();
 
   const [sliderImageData, setSliderImageData] = useState([]); // for slider image
@@ -194,7 +206,11 @@ const HomeScreen = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: "black" }}>
       {connectionFail && <ConnectionLose />}
 
-      {/* {nativeAds && <IntroNoticeCard data={nativeAds} />} */}
+      {checkIntroNativeCode == 0 ? (
+        nativeAds && <IntroNoticeCard data={nativeAds} />
+      ) : (
+        <></>
+      )}
 
       {facebookPage && <HeaderLogo data={facebookPage} />}
 

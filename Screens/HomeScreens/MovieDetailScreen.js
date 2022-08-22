@@ -28,7 +28,7 @@ import PageLoadAnimation from "../../Helper/PageLoadAnimation";
 import CustomAds from "../../Helper/CustomAds";
 
 const MovieDetailScreen = ({ navigation, route }) => {
-  const data = route.params;
+  const { dt: data, type: type, searchPage: searchPage } = route.params;
 
   // Get native ads data
   const adsData = useSelector((state) => state.ads);
@@ -107,11 +107,12 @@ const MovieDetailScreen = ({ navigation, route }) => {
           navigation={navigation}
           data={data}
           admobAdsCode={admobAdsCode}
+          type={type}
         />
 
         {nativeAds && <CustomAds type={"Native"} adsCode={nativeAds} />}
 
-        {relatedData.length > 0 && (
+        {searchPage != 1 && relatedData.length > 0 && (
           <RelatedMovies navigation={navigation} relatedData={relatedData} />
         )}
 

@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import { db } from "../../Helper/Config";
 
 // import components
-import ItemCard from "../../Components/SeeMoreMovieScreenComponents/MovieCard";
+import MovieCard from "../../Components/SearchMovieScreenComponents/MovieCard";
 
 // import admob ads dependenncies
 import { AdMobBanner } from "expo-ads-admob";
@@ -33,7 +33,7 @@ const SearchScreen = ({ navigation }) => {
   const [banner_4, setBanner_4] = useState();
 
   const [search, setSearch] = useState();
-  const [searchData, setSearchData] = useState();
+  const [searchData, setSearchData] = useState([]);
 
   useEffect(() => {
     filterAdsData(adsData);
@@ -53,13 +53,14 @@ const SearchScreen = ({ navigation }) => {
     const movieRef = db
       .firestore()
       .collection("movies")
-      .where("title", "==", searchText);
+      .where("code", "==", searchText);
     await movieRef.onSnapshot((querySnapShot) => {
       let arr = [];
       querySnapShot.forEach((doc) => {
         arr.push(doc.data());
       });
       setSearchData(arr);
+      console.log(arr.length);
     });
   };
 
@@ -73,10 +74,14 @@ const SearchScreen = ({ navigation }) => {
         <TextInput
           value={search}
           style={styles.input}
-          placeholder="Movie Name..."
+          placeholder="Movie Code... MP-001"
           onChangeText={(text) => {
             setSearch(text);
             setSearchData([]);
+          }}
+          onSubmitEditing={() => {
+            searchMovieData(search);
+            setSearch("");
           }}
         />
         <TouchableOpacity
@@ -105,11 +110,11 @@ const SearchScreen = ({ navigation }) => {
         )}
 
         <View style={styles.moviesContainer}>
-          {searchData ? (
-            <ItemCard
-              data={searchData}
+          {searchData.length > 0 ? (
+            <MovieCard
+              dt={searchData[0]}
               navigation={navigation}
-              ads={banner_4}
+              type={"poster"}
             />
           ) : (
             <></>
@@ -156,6 +161,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     marginTop: 10,
     paddingHorizontal: 15,
+    letterSpacing: 0.8,
   },
   searchBtnContainer: {
     width: "20%",

@@ -32,6 +32,7 @@ const Category = ({ categories, firstAdsCode, secondAdsCode, navigation }) => {
                 navigation.navigate("SeeMoreMoviesScreen", {
                   Category: data.name,
                   Total: data.total,
+                  Type: data.type,
                 });
               }}
             >

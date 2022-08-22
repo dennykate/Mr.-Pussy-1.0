@@ -5,6 +5,7 @@ import {
   socialDataReducer,
   admobAdsReducer,
   DownloadFileInPercent,
+  introNativeCode,
 } from "./addData";
 
 const reducer = combineReducers({
@@ -13,6 +14,7 @@ const reducer = combineReducers({
   ads: adsDataReducer,
   admobAds: admobAdsReducer,
   donwloadPercent: DownloadFileInPercent,
+  introNativeCode: introNativeCode,
 });
 
 export const rootReducer = (state, action) => {

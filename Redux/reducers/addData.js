@@ -51,3 +51,12 @@ export const DownloadFileInPercent = (state = "", action) => {
       return state;
   }
 };
+
+export const introNativeCode = (state = 0, action) => {
+  switch (action.type) {
+    case "Add Intro Native Code":
+      return action.payload;
+    default:
+      return state;
+  }
+};

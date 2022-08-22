@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -18,10 +18,29 @@ import { AdMobBanner } from "expo-ads-admob";
 // import admob ads
 import { reward } from "../../Helper/AdmobAds";
 
+// import firebase database
+import { db } from "../../Helper/Config";
+
 const width = Dimensions.get("screen").width - 100;
 
 const DonationScreen = () => {
   const admobAdsData = useSelector((state) => state.admobAds);
+
+  const [photoData, setPhotoData] = useState();
+
+  useEffect(() => {
+    fetchDonationPhotoDataFromFirebase();
+  }, []);
+
+  const fetchDonationPhotoDataFromFirebase = async () => {
+    const dataRef = db.firestore().collection("donation_images");
+    await dataRef.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        setPhotoData(doc.data());
+      });
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -43,107 +62,111 @@ const DonationScreen = () => {
           style={styles.image}
         />
 
-        <View style={styles.cardContainer}>
-          <TouchableOpacity
-            style={styles.card}
-            activeOpacity={0.8}
-            onPress={() => {
-              if (admobAdsData.reward) {
-                reward(admobAdsData.reward);
-              }
-            }}
-          >
-            <Image
-              source={{ uri: "https://i.postimg.cc/QxzcLVyB/eimi-fukada.png" }}
-              style={styles.cardImage}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.card}
-            activeOpacity={0.8}
-            onPress={() => {
-              if (admobAdsData.reward) {
-                reward(admobAdsData.reward);
-              }
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://i.postimg.cc/k47bNSBH/thien-than-sexy-phim-18-la-yua-mikami-4-1603597572-474-width660height616.jpg",
+        {photoData && (
+          <View style={styles.cardContainer}>
+            <TouchableOpacity
+              style={styles.card}
+              activeOpacity={0.8}
+              onPress={() => {
+                if (admobAdsData.reward) {
+                  reward(admobAdsData.reward);
+                }
               }}
-              style={styles.cardImage}
-            />
-          </TouchableOpacity>
+            >
+              <Image
+                source={{
+                  uri: photoData.fir,
+                }}
+                style={styles.cardImage}
+              />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.card}
-            activeOpacity={0.8}
-            onPress={() => {
-              if (admobAdsData.reward) {
-                reward(admobAdsData.reward);
-              }
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://i.postimg.cc/DwZFGwvc/5f5c4515b2ab4082dd03997a-Tsukasa-Aoi-1.jpg",
+            <TouchableOpacity
+              style={styles.card}
+              activeOpacity={0.8}
+              onPress={() => {
+                if (admobAdsData.reward) {
+                  reward(admobAdsData.reward);
+                }
               }}
-              style={styles.cardImage}
-            />
-          </TouchableOpacity>
+            >
+              <Image
+                source={{
+                  uri: photoData.sec,
+                }}
+                style={styles.cardImage}
+              />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.card}
-            activeOpacity={0.8}
-            onPress={() => {
-              if (admobAdsData.reward) {
-                reward(admobAdsData.reward);
-              }
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://i.postimg.cc/tR3XQcvF/images.jpg",
+            <TouchableOpacity
+              style={styles.card}
+              activeOpacity={0.8}
+              onPress={() => {
+                if (admobAdsData.reward) {
+                  reward(admobAdsData.reward);
+                }
               }}
-              style={styles.cardImage}
-            />
-          </TouchableOpacity>
+            >
+              <Image
+                source={{
+                  uri: photoData.thir,
+                }}
+                style={styles.cardImage}
+              />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.card}
-            activeOpacity={0.8}
-            onPress={() => {
-              if (admobAdsData.reward) {
-                reward(admobAdsData.reward);
-              }
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://i.postimg.cc/KzXyC7n9/x3-WFQJOVZED339s7.jpg",
+            <TouchableOpacity
+              style={styles.card}
+              activeOpacity={0.8}
+              onPress={() => {
+                if (admobAdsData.reward) {
+                  reward(admobAdsData.reward);
+                }
               }}
-              style={styles.cardImage}
-            />
-          </TouchableOpacity>
+            >
+              <Image
+                source={{
+                  uri: photoData.fout,
+                }}
+                style={styles.cardImage}
+              />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.card}
-            activeOpacity={0.8}
-            onPress={() => {
-              if (admobAdsData.reward) {
-                reward(admobAdsData.reward);
-              }
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://i.postimg.cc/Xq46YV1d/10-10-1583396684-476-width800height700.jpg",
+            <TouchableOpacity
+              style={styles.card}
+              activeOpacity={0.8}
+              onPress={() => {
+                if (admobAdsData.reward) {
+                  reward(admobAdsData.reward);
+                }
               }}
-              style={styles.cardImage}
-            />
-          </TouchableOpacity>
-        </View>
+            >
+              <Image
+                source={{
+                  uri: photoData.fifth,
+                }}
+                style={styles.cardImage}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.card}
+              activeOpacity={0.8}
+              onPress={() => {
+                if (admobAdsData.reward) {
+                  reward(admobAdsData.reward);
+                }
+              }}
+            >
+              <Image
+                source={{
+                  uri: photoData.sixth,
+                }}
+                style={styles.cardImage}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
     </View>
   );

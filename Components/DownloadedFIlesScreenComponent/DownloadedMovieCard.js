@@ -15,6 +15,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 // import async storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const Width = (Dimensions.get("screen").width * 4) / 10;
+
 const DonwloadedMovieCard = ({ data, navigation }) => {
   const getDownloadedDate = (time) => {
     const intTime = parseInt(time);
@@ -68,7 +70,7 @@ const DonwloadedMovieCard = ({ data, navigation }) => {
             removeItem(data.id);
           }}
         >
-          <Ionicons name="trash-outline" size={20} color={"red"} />
+          <Ionicons name="trash-outline" size={18} color={"red"} />
         </TouchableOpacity>
       </View>
     </View>
@@ -78,20 +80,20 @@ const DonwloadedMovieCard = ({ data, navigation }) => {
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    height: 150,
+    height: (Width * 10) / 16,
     borderBottomWidth: 0.2,
     borderBottomColor: "grey",
     flexDirection: "row",
   },
   image: {
-    width: 120,
-    height: 148,
+    width: Width,
+    height: (Width * 9.9) / 16,
     marginTop: 1,
   },
   detail: {
-    width: Dimensions.get("screen").width - 120,
+    width: (Dimensions.get("screen").width * 6) / 10,
     flexDirection: "column",
-    paddingVertical: 30,
+    paddingVertical: 7,
     paddingLeft: 15,
   },
   detailText: {
@@ -99,12 +101,12 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "grey",
     letterSpacing: 0.3,
-    marginBottom: 10,
+    marginBottom: 3,
   },
   watchBtnContainer: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     justifyContent: "center",
     alignItems: "center",
     borderColor: "green",
@@ -115,9 +117,9 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   deleteBtnContainer: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     borderColor: "red",
     borderWidth: 2,
     justifyContent: "center",

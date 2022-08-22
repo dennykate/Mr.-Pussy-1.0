@@ -25,7 +25,7 @@ const IntroNoticeCard = ({ data }) => {
     setEnterBtn(false);
 
     setTimeout(() => {
-      setEnterBtn(true);
+      setShowIntro(false);
     }, 10000);
   };
 

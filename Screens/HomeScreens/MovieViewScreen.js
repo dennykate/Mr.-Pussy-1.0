@@ -11,9 +11,11 @@ import {
 // import expo dependencies
 import { Video } from "expo-av";
 import * as ScreenOrientation from "expo-screen-orientation";
-import LottieView from "lottie-react-native";
-import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
+import { StatusBar } from "expo-status-bar";
+
+// import lottie
+import LottieView from "lottie-react-native";
 
 const MovieViewScreen = ({ route }) => {
   useEffect(() => {

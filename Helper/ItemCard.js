@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Image, TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import {
+  Image,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  View,
+  Dimensions,
+} from "react-native";
 
 // import custom ads
 import { BannerSize, NativeSize } from "./CustomAds";
+
+const Width = (Dimensions.get("screen").width * 6) / 10;
 
 const ItemCard = ({ data, navigation }) => {
   return (
     <>
       {data.map((dt, index) => {
-        if (dt.ads == 1) {
-          return (
-            <View key={index} style={styles.bannerContainer}>
-              <BannerSize />
-            </View>
-          );
-        }
         return (
           <View key={index}>
             <TouchableOpacity
@@ -45,8 +47,8 @@ const ItemCard = ({ data, navigation }) => {
 
 const styles = StyleSheet.create({
   movieCard: {
-    width: 150,
-    height: 225,
+    width: Width,
+    height: (Width * 12) / 16,
     backgroundColor: "#232526",
     marginHorizontal: 8,
     marginVertical: 15,
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 200,
+    height: (Width * 10) / 16,
     resizeMode: "cover",
   },
   movieName: {
